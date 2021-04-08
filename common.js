@@ -1,5 +1,5 @@
 // 一些公共方法
-import {$svg} from "./init";
+
 import showSvg from "@/js/common/commons/showSvg";
 // 返回数组
 const getArr = function (reportName,tdId) {
@@ -12,6 +12,31 @@ const getTd = function(reportName,tdId) {
 };
 const getData = function (reportName,tdId) {
     return $(`div[widgetname^="${reportName.toUpperCase()}"] td[id^="${tdId.toUpperCase()+'-0-'}"]`).text();
+};
+const textAlign = function ($ele,type = 'center') {
+    setTimeout(function () {
+        const list1 = [];
+        let num = 0;
+        switch (type) {
+            case 'center':
+                num = -2;
+                break;
+            case "right":
+                num = -1;
+                break;
+        }
+        $ele = $ele.children().length ? $ele.children() : $ele;
+
+        $ele.each((index ,value) => {
+            list1.push(value.getBBox().width);
+
+        });
+
+        list1.forEach((value, index) => {
+            $ele.eq(index).attr('transform',`translate(${value/num},0)`);
+            // $ele.eq(index).attr('x',$ele.eq(index).attr('x') - value / 2)
+        });
+    },100)
 }
 // 字体居中
 const textCenter = function ($ele) {
@@ -21,9 +46,11 @@ const textCenter = function ($ele) {
         list1.push(value.getBBox().width);
     });
     list1.forEach((value, index) => {
+        // $ele.eq(index).attr('transform',-value/2);
         $ele.eq(index).attr('x',$ele.eq(index).attr('x') - value / 2)
     });
 };
+
 const textRight = function ($ele) {
     const list1 = []
     $ele = $ele.children().length ? $ele.children() : $ele;
@@ -97,5 +124,6 @@ export {
     Q_QObj,
     getUnitCode,
     TipsText,
-    showSvg
+    showSvg,
+    textAlign
 };
