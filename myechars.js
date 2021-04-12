@@ -383,9 +383,53 @@ const tiaoXingDuiJi = function (obj) {
         $ele.find('.shift_group').text(str);
     }
 };
+const zhuZhuangTu_171 = function (obj) {
+    obj.margin = obj.margin || 0.3;
+    const length1 = obj.order1.length ;                             // 分类1
+    const length2 = obj.order2.length ;                             // 分类2
+    const width = obj.width / ( length1 + obj.margin);              // 每个分取的宽度（包含左右边距）
+    const width1 = width * (1 - obj.margin);                        // 区域宽度（不包含左右边距）
+    const width2 = width1 * ( length2 > 1 ? 0.7 : 1 ) / length2  ;  // 柱子的实际宽度
+    const margin1 = width * obj.margin ;                            // 大边距
+    const margin2 = length2 >1 ? width1 * 0.3 / (length2 - 1) : 0;  // 小边距
+    const list = [];
+    obj.data.forEach(value => {
+        list.push(...value);
+    });
+    const max = Math.max(...list);
+    // 循环数组
+    const rectArr = [];
+    obj.data.forEach((value , index) => {
+        let str = `<g class="kuqus hover" STOCK_NO="${obj.order1[index]}">`;
+        value.forEach((value1 , index1) => {
+            str += `<g class="kuqu_click hover" STOCK_NO="${obj.order1[index]}" ST_NO_ROLL_TYPE="${obj.order2[index1]}">
+                            <rect x="${obj.x + index  * width + margin1 + index1 * width2 + index1 * margin2}" y="${obj.y - value1 / max * obj.height}" width="${width2}" height="${value1 / max * obj.height}" fill="${obj.color[index1]}" >
+                            </rect>
+                            <text x="${obj.x + index  * width + margin1 + index1 * width2 + index1 * margin2 + width2 / 2}" y="${obj.y - value1 / max * obj.height - 10 }" font-size="22.8" style="font-family: 'AgencyFB-Reg'">${Number(value1)}</text>
+                   </g>`;
+        });
+        str += `
+            <g>
+                <rect x="${margin1 + index * width +obj.x}" y="${obj.textY - 48  }" width="${width1}" height="50" fill="#036EB8" ></rect>
+                <text x="${margin1 + width1 / 2 + index * width + obj.x}" y="${obj.textY }" font-family="AgencyFB-Reg" font-size="48" fill="white">${obj.order1[index]}</text>
+            </g>
+        </g>`;
+        rectArr.push(str);
+    });
+    if (typeof obj.$ele == 'string') {
+        obj.$ele = $(obj.$ele);
+    };
+    if (obj.$ele[0]) {
+        obj.$ele.html(rectArr.join(''))
+    };
+    obj.$ele.find(' text').each((index ,value ) => {
+        textCenter($(value));
+    });
+};
 export {
     tiaoXinTu,
     zhuZhuangTu,
+    zhuZhuangTu_171,
     table,
     arc,
     doubleArc,
