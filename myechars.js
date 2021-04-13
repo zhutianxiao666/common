@@ -79,9 +79,9 @@ const table = function ({width,data,titles,order,$ele}) {
             value.forEach((value1, index1) => {
                 if (index1 > 0) {
                     sum2 += order[index1 - 1];
-                    list.push(`<tspan fill="#0075D8" font-family="'微软雅黑'" font-size="32" x="${sum2 / sum * width } ">|</tspan></tspan><tspan fill="#6E6E6E" font-family="'微软雅黑'" font-size="32" x="${sum2 / sum * width + 10 } ">${value1}</tspan>`);
+                    list.push(`<tspan fill="#0075D8" font-family="'微软雅黑'" font-size="32" x="${sum2 / sum * width } ">|</tspan></tspan><tspan fill="#6E6E6E" font-family="'微软雅黑'" font-size="32" x="${sum2 / sum * width + 10 } ">${value1.length > 11 ? value1.substr(0,11): value1 }</tspan>`);
                 }else {
-                    list.push(`<tspan fill="#6E6E6E" font-family="'微软雅黑'" font-size="32" x="10">${value1}</tspan>`);
+                    list.push(`<tspan fill="#6E6E6E" font-family="'微软雅黑'" font-size="32" x="10">${value1.length > 14 ? value1.substr(0,14): value1 }</tspan>`);
                 }
             });
             textArr.filter('[data-index="'+index+'"]').html(list.join(''));
@@ -133,6 +133,8 @@ const arc = function ({$ele,num1,num2,num,type,x,y,r}) {
     }else {
         // 文本
         $ele.find('.num').text(Number(num).toFixed(2) + '%');
+        textCenter($ele.find('.num1').text(Number(num1).toFixed(2)));
+        textCenter($ele.find('.num2').text(Number(num2).toFixed(2)));
         num/=100;
         textCenter($ele.find('.num'));
         if (num<0) {
@@ -327,7 +329,7 @@ const bingTu_171 = function ({$ele,data,rIn,rOut,color,x,y,danwei,total}) {
         if(value > 0){
             textX = Math.cos(Math.PI * 2 * (sum2 + value / 2)/sum) * rOut + x - rOut ;
             textY = - Math.sin(Math.PI * 2 * (sum2 + value / 2)/sum) * rOut + y ;
-            pathArr.push(`<text class="text" x="${textX}" y="${textY}" font-size="38" fill="black"> ${value.toFixed(1)} ${typeof(danwei) == "undefined" ? '':danwei} ${typeof(total) == "undefined" ? '':'(' + (value * 100 / total).toFixed(2) + '%)'}</text>`)
+            pathArr.push(`<text class="text" x="${textX}" y="${textY}" font-size="18" fill="black"> ${value.toFixed(1)} ${typeof(danwei) == "undefined" ? '':danwei} ${typeof(total) == "undefined" ? '':'(' + (value * 100 / total).toFixed(2) + '%)'}</text>`)
         }
         sum2 += value;
     });
