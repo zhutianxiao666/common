@@ -3,6 +3,7 @@ import {getTd, Q_QArr , textCenter} from "./common";
 import zhexiantu from "./myechars/zhexiantu";
 import yingguangtiao from "./myechars/yingguangtiao";
 import zhuZhuangTu from "@/js/common/myechars/zhuZhuangTu";
+import bingTu_2 from "@/js/common/myechars/bingTu_2";
 
 // 条形图
 const tiaoXinTu = function ({x,id,data,width,shift_group,length}) {
@@ -258,6 +259,7 @@ const changeText = function ({$ele,reportName,tdId,length,type}) {
     }
 };
 const bingTu = function ({$ele,data,order,rIn,rOut,color,x,y}) {
+    console.log($ele);
     $ele = typeof $ele == 'string' ? $svg.find($ele) : $ele;
     if (!$ele[0]) {
         console.log($ele,'环形图元素查询失败');
@@ -287,6 +289,7 @@ const bingTu = function ({$ele,data,order,rIn,rOut,color,x,y}) {
     }
     $ele.find('.path').html(pathArr.join(''));
 };
+
 const bingTu_171 = function ({$ele,data,rIn,rOut,color,x,y,danwei,total}) {
     $ele = typeof $ele == 'string' ? $svg.find($ele) : $ele;
     if (!$ele[0]) {
@@ -393,6 +396,7 @@ export {
     changeText,
     bingTu,
     bingTu_171,
+    bingTu_2,
     zhexiantu,
     yingguangtiao,
     tiaoXingDuiJi

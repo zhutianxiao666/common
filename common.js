@@ -1,6 +1,7 @@
 // 一些公共方法
 
 import showSvg from "@/js/common/commons/showSvg";
+import arr2obj from "@/js/common/commons/arr2obj";
 // 返回数组
 const getArr = function (reportName,tdId) {
     return $(`div[widgetname^="${reportName.toUpperCase()}"] td[id^="${tdId.toUpperCase()+'-0-'}"]`).text().split(',');
@@ -29,7 +30,6 @@ const textAlign = function ($ele,type = 'center') {
 
         $ele.each((index ,value) => {
             list1.push(value.getBBox().width);
-
         });
 
         list1.forEach((value, index) => {
@@ -63,9 +63,11 @@ const textRight = function ($ele) {
 };
 // 转换数组
 const Q_QArr = function (data) {
+
     const list1 = data.split('-*-,');
-    list1[list1.length - 1] = list1[list1.length - 1].replace('-*-','');
     const list2 = [];
+    list1[list1.length - 1] = list1[list1.length - 1].replace('-*-','');
+
     list1.forEach(value => {
         list2.push(value.split('Q_Q'));
     });
@@ -113,6 +115,14 @@ const TipsText = function ({ x,y,isEnter,num,orderby}) {
         $Tip.stop().fadeToggle(1000)
     }
 }
+
+const sum = function (arr) {
+    let sum = 0 ;
+    arr.forEach(value => {
+        sum += value;
+    });
+    return sum;
+}
 // 导出
 export {
     getTd,
@@ -125,5 +135,7 @@ export {
     getUnitCode,
     TipsText,
     showSvg,
-    textAlign
+    textAlign,
+    arr2obj,
+    sum
 };
